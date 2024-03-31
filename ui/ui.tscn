@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2u5qm3lpvted"]
+
+[ext_resource type="Script" path="res://ui/ui.gd" id="1_vmvx7"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_vmvx7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -50.0
+offset_right = 98.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="AddRoom" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Add Room"
+
+[node name="Marketing" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Marketing"
