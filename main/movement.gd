@@ -2,8 +2,8 @@ extends Node2D
 
 @onready var camera: Camera2D = $Camera2D
 
-const MIN_ZOOM := Vector2.ONE * 0.5
-const MAX_ZOOM := Vector2.ONE * 4.5
+const MIN_ZOOM := Vector2.ONE * 0.4
+const MAX_ZOOM := Vector2.ONE * 4.6
 const ZOOM_INCREMENT := Vector2.ONE * 0.2
 const ZOOM_RATE := 16
 
