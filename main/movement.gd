@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 	
 	camera.zoom = camera.zoom.lerp(target_zoom, ZOOM_RATE * delta)
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_event: InputEventMouseButton = event

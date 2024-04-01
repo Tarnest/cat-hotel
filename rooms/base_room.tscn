@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://db7uyl21ygoi2"]
+[gd_scene load_steps=4 format=3 uid="uid://db7uyl21ygoi2"]
 
 [ext_resource type="Texture2D" uid="uid://b6c4kuptwuwmm" path="res://rooms/base_room.png" id="1_0iwl0"]
+[ext_resource type="Script" path="res://rooms/room.gd" id="1_afsku"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5s4st"]
 size = Vector2(128, 128)
 
 [node name="Room" type="StaticBody2D"]
+script = ExtResource("1_afsku")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_0iwl0")
