@@ -4,6 +4,7 @@ extends Node2D
 @onready var detect_buildings: RayCast2D = $DetectBuildings
 
 var grid_size := 32
+var room_overlapping := false
 
 func _ready() -> void:
 	Global.add_room_pressed.connect(on_add_room_pressed)
@@ -18,7 +19,10 @@ func _physics_process(_delta: float) -> void:
 		if child is Room:
 			var room: Room = child
 			room.global_position = get_grid_mouse_position()
+			room_overlapping = !room.area.get_overlapping_areas().is_empty()
+			print_debug(!room.area.get_overlapping_areas().size())
 			break
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Global.can_place_tile:
@@ -47,8 +51,10 @@ func can_place_tile_switched() -> void:
 
 
 func place_tile() -> void:
-	var mouse_pos := get_grid_mouse_position()
+	if room_overlapping:
+		return
 	
+	var mouse_pos := get_grid_mouse_position()
 	var base_room: Node2D = Global.BASE_ROOM.instantiate()
 	base_room.position = mouse_pos
 	main.add_child(base_room)
@@ -57,8 +63,9 @@ func place_tile() -> void:
 func remove_tile() -> void:
 	if detect_buildings.is_colliding():
 		var collider: Node2D = detect_buildings.get_collider()
-		if detect_buildings.get_collider() is Room:
-			collider.queue_free()
+		var parent: Node2D = collider.get_parent()
+		if parent is Room:
+			parent.queue_free()
 
 
 func on_add_room_pressed() -> void:
