@@ -6,6 +6,12 @@ extends Node2D
 var grid_size := 32
 var room_overlapping := false
 
+var model_room: Room:
+	set(new_model_room):
+		if model_room != null:
+			model_room.queue_free()
+		model_room = new_model_room
+
 func _ready() -> void:
 	Global.add_room_pressed.connect(on_add_room_pressed)
 	Global.remove_room_pressed.connect(on_remove_room_pressed)
@@ -15,13 +21,9 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	detect_buildings.global_position = get_global_mouse_position()
 	
-	for child in get_children():
-		if child is Room:
-			var room: Room = child
-			room.global_position = get_grid_mouse_position()
-			room_overlapping = !room.area.get_overlapping_areas().is_empty()
-			print_debug(!room.area.get_overlapping_areas().size())
-			break
+	if model_room != null:
+		model_room.global_position = get_grid_mouse_position()
+		room_overlapping = model_room.area.has_overlapping_areas()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -44,10 +46,9 @@ func can_place_tile_switched() -> void:
 		var room: Room = Global.current_room.instantiate()
 		room.global_position = get_grid_mouse_position()
 		add_child(room)
+		model_room = room
 	else:
-		for child in get_children():
-			if child is Room:
-				child.queue_free()
+		model_room = null
 
 
 func place_tile() -> void:
@@ -55,7 +56,7 @@ func place_tile() -> void:
 		return
 	
 	var mouse_pos := get_grid_mouse_position()
-	var base_room: Node2D = Global.BASE_ROOM.instantiate()
+	var base_room: Room = Global.BASE_ROOM.instantiate()
 	base_room.position = mouse_pos
 	main.add_child(base_room)
 
